@@ -11,7 +11,8 @@ import stacktex.mobin.search.countdowntimer.SimpleCountDownTimer;
 
 public class Main2Activity extends AppCompatActivity implements SimpleCountDownTimer.OnCountDownListener {
     private TextView textView;
-    private Button start, resume, pause;
+    private Button start;
+    private Button resume;
 
     private SimpleCountDownTimer simpleCountDownTimer = new SimpleCountDownTimer(0, 10, 1, this);
 
@@ -22,7 +23,7 @@ public class Main2Activity extends AppCompatActivity implements SimpleCountDownT
         textView = findViewById(R.id.tv);
         start = findViewById(R.id.startBtn);
         resume = findViewById(R.id.resumeBtn);
-        pause = findViewById(R.id.pauseBtn);
+        Button pause = findViewById(R.id.pauseBtn);
 
         resume.setEnabled(false);
 
@@ -39,6 +40,7 @@ public class Main2Activity extends AppCompatActivity implements SimpleCountDownT
         });
         pause.setOnClickListener(view -> {
             simpleCountDownTimer.pause();
+            simpleCountDownTimer.setTimerPattern("ss");
             resume.setEnabled(true);
         });
 

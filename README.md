@@ -1,4 +1,7 @@
 # Android CountDown Timer
+
+:alarm_clock:
+
 A simple countdown timer identical to [android.os.CountDownTimer](https://developer.android.com/reference/android/os/CountDownTimer) but with simplified usage and additional functionality to pause,resume and run in background.
 
 

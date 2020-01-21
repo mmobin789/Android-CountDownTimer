@@ -40,7 +40,7 @@ public class Main2Activity extends AppCompatActivity implements SimpleCountDownT
         });
         pause.setOnClickListener(view -> {
             simpleCountDownTimer.pause();
-            simpleCountDownTimer.setTimerPattern("ss");
+            simpleCountDownTimer.setTimerPattern("s");
             resume.setEnabled(true);
         });
 

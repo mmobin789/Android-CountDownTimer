@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit
  * @param onCountDownListener A listener for countdown ticks.
  * @param delayInSeconds optional delay in seconds for a tick to execute default is 1 second.
  * Note: This timer runs on UI thread by default but that can be changed by calling runOnBackgroundThread at any time.
+ * @author Mobin Munir
  */
 class SimpleCountDownTimerKotlin(
     private val fromMinutes: Long,

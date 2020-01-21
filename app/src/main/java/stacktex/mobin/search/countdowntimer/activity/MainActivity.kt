@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(),
 
         startBtn.setOnClickListener {
             countDownTimer.start()
-            countDownTimer.setTimerPattern("s")
+
             startBtn.isEnabled = false
         }
 
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(),
         pauseBtn.setOnClickListener {
             countDownTimer.pause()
             resumeBtn.isEnabled = true
+            countDownTimer.setTimerPattern("s")
         }
     }
 

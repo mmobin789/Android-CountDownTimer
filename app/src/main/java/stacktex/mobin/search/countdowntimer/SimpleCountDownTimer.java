@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * A simple count-town timer identical to android.os.CountDownTimer but with simplified usage and additional functionality to pause and resume.
  * Note: This timer runs on UI thread by default but that can be changed by calling runOnBackgroundThread at any time.
+ * @author Mobin Munir
  */
 public final class SimpleCountDownTimer {
     private OnCountDownListener onCountDownListener;

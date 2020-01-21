@@ -3,6 +3,7 @@ package stacktex.mobin.search.countdowntimer.activity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -50,7 +51,10 @@ public class Main2Activity extends AppCompatActivity implements SimpleCountDownT
 
     @Override
     public void onCountDownActive(String time) {
+
         textView.post(() -> textView.setText(time));
+
+        Toast.makeText(this, "Seconds = " + simpleCountDownTimer.getSecondsTillCountDown() + " Minutes=" + simpleCountDownTimer.getMinutesTillCountDown(), Toast.LENGTH_SHORT).show();
 
     }
 

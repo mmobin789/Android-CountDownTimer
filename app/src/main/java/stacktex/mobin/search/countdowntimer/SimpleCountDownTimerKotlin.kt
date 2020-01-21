@@ -8,8 +8,8 @@ import java.util.concurrent.TimeUnit
 
 /**
  * A simple count-town timer identical to android.os.CountDownTimer but with simplified usage and additional functionality to pause and resume.
- * @param fromMinutes Minutes to countdown.
- * @param fromSeconds Seconds to countdown.
+ * @param fromMinutes minutes to countdown.
+ * @param fromSeconds seconds to countdown.
  * @param onCountDownListener A listener for countdown ticks.
  * @param delayInSeconds optional delay in seconds for a tick to execute default is 1 second.
  * Note: This timer runs on UI thread by default but that can be changed by calling runOnBackgroundThread at any time.
@@ -40,6 +40,19 @@ class SimpleCountDownTimerKotlin(
         minutes = fromMinutes
         seconds = fromSeconds
     }
+
+    /**
+     * @return This method returns seconds till countdown.
+     */
+    fun getSecondsTillCountDown() = seconds
+
+
+    /**
+     * @return This method returns minutes till countdown.
+     */
+    fun getMinutesTillCountDown() = minutes
+
+
 
     /**
      * Sets a new pattern for SimpleDateFormat for time returned on each tick.

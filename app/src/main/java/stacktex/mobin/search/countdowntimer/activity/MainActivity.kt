@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity(),
     private val countDownTimer =
         SimpleCountDownTimerKotlin(
             0,
-            30,
+            10,
             this
         )
 
@@ -42,9 +42,16 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onCountDownActive(time: String) {
+
         runOnUiThread {
+
             tv.text = time
-            Toast.makeText(this, time, Toast.LENGTH_SHORT).show()
+
+            Toast.makeText(
+                this,
+                "Seconds = " + countDownTimer.getSecondsTillCountDown() + " Minutes=" + countDownTimer.getMinutesTillCountDown(),
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
     }

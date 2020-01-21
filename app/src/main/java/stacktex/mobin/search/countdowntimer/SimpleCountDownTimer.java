@@ -30,6 +30,12 @@ public final class SimpleCountDownTimer {
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss", Locale.getDefault());
     private Runnable runnable = this::decrementMinutes;
 
+    /**
+     * @param fromMinutes         minutes to countdown.
+     * @param fromSeconds         seconds to countdown.
+     * @param onCountDownListener A listener for countdown ticks.
+     * @param delayInSeconds      optional delay in seconds for a tick to execute default is 1 second.
+     */
     public SimpleCountDownTimer(long fromMinutes, long fromSeconds, long delayInSeconds, OnCountDownListener onCountDownListener) {
         this.fromMinutes = fromMinutes;
         this.fromSeconds = fromSeconds;
@@ -38,6 +44,20 @@ public final class SimpleCountDownTimer {
         this.onCountDownListener = onCountDownListener;
         minutes = fromMinutes;
         seconds = fromSeconds;
+    }
+
+    /**
+     * @return This method returns seconds till countdown.
+     */
+    public long getSecondsTillCountDown() {
+        return seconds;
+    }
+
+    /**
+     * @return This method returns minutes till countdown.
+     */
+    public long getMinutesTillCountDown() {
+        return minutes;
     }
 
     /**

@@ -52,7 +52,8 @@ public final class SimpleCountDownTimer {
 
     /**
      * This method call will permanently move the timer to run in background thread for this instance.
-     * A new thread is created and which is bound to timer's handler of main thread's message queue therefore overwriting it.
+     * A new thread is created which is then bound to timer's handler of main thread's message queue therefore overwriting it.
+     * This method can be invoked at any time.
      * Note: onCountDownListener callbacks will not be invoked on main thread.
      */
     public final void runOnBackgroundThread() {

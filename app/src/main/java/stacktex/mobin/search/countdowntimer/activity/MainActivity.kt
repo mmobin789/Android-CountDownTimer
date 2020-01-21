@@ -21,26 +21,39 @@ class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tv.setOnClickListener {
+        resumeBtn.isEnabled = false
+
+        startBtn.setOnClickListener {
             countDownTimer.start()
-            countDownTimer.setTimerPattern("ss:mm")
+            countDownTimer.setTimerPattern("s")
+            startBtn.isEnabled = false
         }
 
         resumeBtn.setOnClickListener {
             countDownTimer.start(true)
+            countDownTimer.runOnBackgroundThread()
         }
 
         pauseBtn.setOnClickListener {
             countDownTimer.pause()
+            resumeBtn.isEnabled = true
         }
     }
 
     override fun onCountDownActive(time: String) {
-        tv.text = time
-        Toast.makeText(this, time, Toast.LENGTH_SHORT).show()
+        runOnUiThread {
+            tv.text = time
+            Toast.makeText(this, time, Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun onCountDownFinished() {
-        tv.text = "Finished"
+        runOnUiThread {
+            tv.text = "Finished"
+            startBtn.isEnabled = true
+            resumeBtn.isEnabled = false
+        }
+
     }
 }

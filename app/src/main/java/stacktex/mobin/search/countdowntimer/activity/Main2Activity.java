@@ -15,7 +15,7 @@ public class Main2Activity extends AppCompatActivity implements SimpleCountDownT
     private Button start;
     private Button resume;
 
-    private SimpleCountDownTimer simpleCountDownTimer = new SimpleCountDownTimer(0, 10, 1, this);
+    private final SimpleCountDownTimer simpleCountDownTimer = new SimpleCountDownTimer(0, 10, 1, this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

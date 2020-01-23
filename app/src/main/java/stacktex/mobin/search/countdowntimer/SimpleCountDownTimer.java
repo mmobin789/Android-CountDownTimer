@@ -2,7 +2,6 @@ package stacktex.mobin.search.countdowntimer;
 
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.text.TextUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,14 +36,40 @@ public final class SimpleCountDownTimer {
      * @param delayInSeconds      optional delay in seconds for a tick to execute default is 1 second.
      */
     public SimpleCountDownTimer(long fromMinutes, long fromSeconds, long delayInSeconds, OnCountDownListener onCountDownListener) {
+
+        if (fromMinutes <= 0 && fromSeconds <= 0)
+            throw new IllegalStateException(getClass().getSimpleName() + " can't work in state 0:00");
+
+        if (delayInSeconds > 1)
+            this.delayInSeconds = delayInSeconds;
+
+        this.onCountDownListener = onCountDownListener;
+
+
+        setCountDownValues(fromMinutes, fromSeconds);
+
+
+    }
+
+    private void setCountDownValues(long fromMinutes, long fromSeconds) {
         this.fromMinutes = fromMinutes;
         this.fromSeconds = fromSeconds;
-        if (delayInSeconds > 0)
-            this.delayInSeconds = delayInSeconds;
-        this.onCountDownListener = onCountDownListener;
-        minutes = fromMinutes;
-        seconds = fromSeconds;
+        minutes = this.fromMinutes;
+
+        if (fromMinutes > 0 && fromSeconds <= 0) {
+            seconds = 0;
+            return;
+        }
+
+        if (fromSeconds <= 0 || fromSeconds > 59) {
+            seconds = 59;
+            return;
+        }
+
+        seconds = this.fromSeconds;
+
     }
+
 
     /**
      * @return This method returns seconds till countdown.
@@ -63,11 +88,12 @@ public final class SimpleCountDownTimer {
     /**
      * Sets a new pattern for SimpleDateFormat for time returned on each tick.
      *
-     * @param pattern a pattern e.g. "mm:ss","hh:mm:ss" or "ss" etc.
+     * @param pattern only acceptable "mm:ss","m:s","mm","ss","m","s".
      */
 
     public void setTimerPattern(String pattern) {
-        if (!TextUtils.isEmpty(pattern))
+        if (pattern.equalsIgnoreCase("mm:ss") || pattern.equalsIgnoreCase("m:s") || pattern.equalsIgnoreCase("mm") ||
+                pattern.equalsIgnoreCase("ss") || pattern.equalsIgnoreCase("m") || pattern.equalsIgnoreCase("s"))
             simpleDateFormat.applyPattern(pattern);
     }
 
@@ -124,10 +150,16 @@ public final class SimpleCountDownTimer {
         if (minutes == 0 && seconds == 0) {
             finish();
         }
-        if (seconds == 0) {
-            minutes--;
-            seconds = fromSeconds;
+
+        if (seconds < 0) {
+            if (minutes > 0) {
+                seconds = 59;
+                minutes--;
+            }
+
         }
+
+
         runCountdown();
 
 
@@ -152,8 +184,7 @@ public final class SimpleCountDownTimer {
     public final void start(boolean resume) {
 
         if (!resume) {
-            minutes = fromMinutes;
-            seconds = fromSeconds;
+            setCountDownValues(fromMinutes, fromSeconds);
             finished = false;
         }
 

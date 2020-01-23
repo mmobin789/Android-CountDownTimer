@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit
  * @author Mobin Munir
  */
 class SimpleCountDownTimerKotlin(
-    private val fromMinutes: Long,
-    private val fromSeconds: Long,
+    private var fromMinutes: Long,
+    private var fromSeconds: Long,
     private val onCountDownListener: OnCountDownListener,
     private var delayInSeconds: Long = 1
 ) {
@@ -26,7 +26,6 @@ class SimpleCountDownTimerKotlin(
     private var seconds = 0L
     private var minutes = 0L
     private var finished = false
-    private var isStarted = false
     private var handler = Handler()
     private var handlerThread: HandlerThread? = null
     private var isBackgroundThreadRunning = false
@@ -34,11 +33,32 @@ class SimpleCountDownTimerKotlin(
     private val runnable = Runnable { decrementMinutes() }
 
     init {
+        check(!(fromMinutes <= 0 && fromSeconds <= 0)) { javaClass.simpleName + " can't work in state 0:00" }
+
         if (delayInSeconds <= 0)
             delayInSeconds = 1
 
-        minutes = fromMinutes
-        seconds = fromSeconds
+        setCountDownValues()
+    }
+
+    private fun setCountDownValues(
+        fromMinutes: Long = this.fromMinutes,
+        fromSeconds: Long = this.fromSeconds
+    ) {
+        this.fromMinutes = fromMinutes
+        this.fromSeconds = fromSeconds
+        minutes = this.fromMinutes
+
+        if (fromMinutes > 0 && fromSeconds <= 0) {
+            seconds = 0
+            return
+        }
+
+        if (fromSeconds <= 0 || fromSeconds > 59) {
+            seconds = 59
+            return
+        }
+        seconds = this.fromSeconds
     }
 
     /**
@@ -53,15 +73,20 @@ class SimpleCountDownTimerKotlin(
     fun getMinutesTillCountDown() = minutes
 
 
-
     /**
      * Sets a new pattern for SimpleDateFormat for time returned on each tick.
-     *
-     * @param pattern a pattern e.g. "mm:ss","hh:mm:ss" or "ss" etc.
+     * @param pattern only acceptable "mm:ss","m:s","mm","ss","m","s".
      */
     fun setTimerPattern(pattern: String) {
-        if (pattern.isNotBlank())
-            simpleDateFormat.applyPattern(pattern)
+        if (pattern.equals("mm:ss", ignoreCase = true) || pattern.equals(
+                "m:s",
+                ignoreCase = true
+            ) || pattern.equals("mm", ignoreCase = true) ||
+            pattern.equals("ss", ignoreCase = true) || pattern.equals(
+                "m",
+                ignoreCase = true
+            ) || pattern.equals("s", ignoreCase = true)
+        ) simpleDateFormat.applyPattern(pattern)
     }
 
     /**
@@ -94,17 +119,26 @@ class SimpleCountDownTimerKotlin(
 
     private fun decrementMinutes() {
         seconds--
+
         if (minutes == 0L && seconds == 0L) {
-            onCountDownListener.onCountDownFinished()
-            finished = true
-            isStarted = false
-            pause()
+            finish()
         }
-        if (seconds == 0L) {
-            minutes--
-            seconds = fromSeconds
+
+        if (seconds < 0L) {
+            if (minutes > 0) {
+                seconds = 59
+                minutes--
+            }
         }
+
+
         runCountdown()
+    }
+
+    private fun finish() {
+        onCountDownListener.onCountDownFinished()
+        finished = true
+        pause()
     }
 
     private fun decrementSeconds() {
@@ -120,14 +154,11 @@ class SimpleCountDownTimerKotlin(
      * @param resume if true it will resume from where its paused else from start.
      */
     fun start(resume: Boolean = false) {
-        if (!resume && isStarted) return
         if (!resume) {
-            minutes = fromMinutes
-            seconds = fromSeconds
+            setCountDownValues()
             finished = false
         }
         runCountdown()
-        isStarted = true
     }
 
     private fun runCountdown() {

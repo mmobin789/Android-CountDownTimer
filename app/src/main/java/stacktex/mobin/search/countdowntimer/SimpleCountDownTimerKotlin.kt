@@ -41,6 +41,9 @@ class SimpleCountDownTimerKotlin(
         setCountDownValues()
     }
 
+    /**
+     * This method sets business logic for countdown operation before it starts.
+     */
     private fun setCountDownValues(
         fromMinutes: Long = this.fromMinutes,
         fromSeconds: Long = this.fromSeconds

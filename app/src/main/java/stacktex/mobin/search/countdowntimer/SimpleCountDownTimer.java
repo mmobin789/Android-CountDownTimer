@@ -51,6 +51,9 @@ public final class SimpleCountDownTimer {
 
     }
 
+    /**
+     * This method sets business logic for countdown operation before it starts.
+     */
     private void setCountDownValues(long fromMinutes, long fromSeconds) {
         this.fromMinutes = fromMinutes;
         this.fromSeconds = fromSeconds;

@@ -25,4 +25,4 @@ A simple countdown timer identical to [android.os.CountDownTimer](https://develo
 
    Just clone the project in Android Studio and run it.
   
-   For details read more on [medium](https://android.jlelse.eu/expandable-recycler-view-in-android-8d8927811ba7).
+   For details read more on [medium](https://android.jlelse.eu/countdown-timer-in-android-941aab8dc976).

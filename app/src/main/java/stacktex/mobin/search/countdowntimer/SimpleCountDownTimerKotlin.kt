@@ -182,9 +182,18 @@ class SimpleCountDownTimerKotlin(
         handler.removeCallbacks(runnable)
     }
 
-
+    /**
+     * A countdown listener to be used to listen for ticks and finish.
+     */
     interface OnCountDownListener {
+        /**A method continuously called on ticking.
+         * @param time The time at tick.
+         */
         fun onCountDownActive(time: String)
+
+        /**
+         * A method called once when countdown is finished.
+         */
         fun onCountDownFinished()
     }
 }

@@ -214,10 +214,20 @@ public final class SimpleCountDownTimer {
         handler.removeCallbacks(runnable);
     }
 
-
+    /**
+     * A countdown listener to be used to listen for ticks and finish.
+     */
     public interface OnCountDownListener {
+        /**
+         * A method continuously called on ticking.
+         *
+         * @param time The time at tick.
+         */
         void onCountDownActive(String time);
 
+        /**
+         * A method called once when countdown is finished.
+         */
         void onCountDownFinished();
     }
 }

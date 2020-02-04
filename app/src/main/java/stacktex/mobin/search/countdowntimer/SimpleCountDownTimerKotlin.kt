@@ -7,7 +7,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
- * A simple count-town timer identical to android.os.CountDownTimer but with simplified usage and additional functionality to pause and resume.
+ * A simple countdown timer identical to android.os.CountDownTimer but with simplified usage and additional functionality to pause and resume.
  * @param fromMinutes minutes to countdown.
  * @param fromSeconds seconds to countdown.
  * @param onCountDownListener A listener for countdown ticks.
